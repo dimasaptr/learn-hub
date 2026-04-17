@@ -1,0 +1,98 @@
+Rancang dan implementasikan sebuah Event Management Platform full-stack dengan arsitektur modular, scalable, dan memiliki pemisahan tanggung jawab yang jelas (separation of concerns).
+
+Tech Stack:
+- Backend: Node.js, Express, TypeScript, Prisma (v7.7.0), PostgreSQL (Neon)
+- Frontend: React, Vite, Tailwind CSS
+- Validation: Zod
+- File Upload: Cloudinary
+- Authentication: JWT
+
+Path
+- Menggunakan struktur modular berbasis feature:
+src/
+- web (Frontend)
+- api (Backend)
+  
+  Feature 1:
+  - events
+  - transactions
+  - vouchers
+  - reviews
+
+  Feature 2:
+  - auth
+  - users
+  - referrals
+  - dashboard
+
+- Shared layer:
+  - middlewares
+  - config
+  - utils
+  - types
+
+Roles:
+- CUSTOMER
+- ORGANIZER (user dapat menjadi organizer melalui tombol "Become Organizer" dan langsung auto-approve tanpa admin)
+
+Perilaku Sistem (Core Logic):
+
+1. Lifecycle Event:
+- DRAFT → PUBLISHED → ARCHIVED → CANCELED
+- Event dianggap selesai jika endDate < waktu sekarang
+- Setelah 7 hari dari selesai, event akan di-archive
+
+2. Flow Transaksi:
+- WAITING_FOR_PAYMENT (expired dalam 2 jam)
+- WAITING_FOR_ADMIN_CONFIRMATION
+- DONE / REJECTED
+- CANCELED jika tidak ada aksi selama 3 hari
+- Seat akan dikembalikan jika transaksi gagal
+
+3. Pembayaran:
+- Metode: manual transfer
+- User upload bukti pembayaran (gambar)
+- Organizer melakukan validasi (approve/reject)
+
+4. Sistem Referral:
+- Referral code digunakan saat registrasi
+- User baru mendapatkan coupon
+- Pemilik referral mendapatkan points
+- Points memiliki masa berlaku masing-masing (FIFO system)
+
+5. Logika Diskon:
+- Hanya boleh menggunakan salah satu:
+  - voucher (khusus event)
+  - coupon (global)
+- Points dapat digunakan bersamaan
+- Total harga tidak boleh kurang dari 0
+- Sisa diskon tidak dikembalikan (hangus)
+
+6. Voucher:
+- Berlaku hanya untuk event tertentu
+- Memiliki batas penggunaan (quota)
+- Memiliki masa berlaku
+
+7. Review:
+- Hanya dapat dibuat jika:
+  - transaksi DONE
+  - event sudah selesai
+
+Git Workflow:
+- main (production)
+- dev (integration)
+- feature-1 dan feature-2 (development paralel)
+- Rule: pull → coding → commit → push
+- Rule: file shared wajib komunikasi sebelum diubah
+
+Aturan Kolaborasi Tim:
+- 1 file = 1 owner (hindari edit file yang sama oleh 2 orang)
+- File shared wajib memiliki header informasi
+- Hindari perubahan tanpa komunikasi
+- Gunakan struktur folder yang konsisten
+
+Output yang diharapkan:
+- Struktur folder yang rapi dan scalable
+- Kode TypeScript yang clean dan konsisten
+- Pemisahan yang jelas antara controller, service, dan repository
+- Mudah dikembangkan dan maintainable

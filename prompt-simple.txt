@@ -1,0 +1,37 @@
+Buatkan backend dan frontend untuk Event Management Platform dengan ketentuan berikut:
+
+Role:
+- Customer
+- Organizer (user bisa klik "Become Organizer" dan langsung auto-approve tanpa admin)
+
+Feature:
+- Event CRUD (create, edit, archive)
+- Transaction (1 user = 1 tiket)
+- Payment upload (image)
+- Voucher (per event, limited)
+- Coupon (dari referral)
+- Referral system:
+  - user input referral saat register
+  - referrer dapat points
+  - user baru dapat coupon
+- Review (setelah event selesai dan transaksi DONE)
+
+Transaction rules:
+- WAITING_FOR_PAYMENT (2 jam → expired)
+- WAITING_FOR_ADMIN_CONFIRMATION
+- DONE / REJECTED
+- auto cancel setelah 3 hari jika tidak direspon
+
+Discount rules:
+- hanya boleh 1 voucher atau 1 coupon
+- points boleh digabung
+- total tidak boleh minus
+
+Tech stack:
+- Express
+- Prisma
+- Neon PostgreSQL
+- React + Vite + Tailwind
+- etc
+
+Gunakan struktur modular per feature (events, auth, transactions, dll).

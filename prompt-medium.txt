@@ -1,0 +1,57 @@
+Buatkan Event Management Platform dengan arsitektur modular dan pembagian feature sebagai berikut:
+
+Backend:
+- Express + TypeScript
+- Prisma ORM + NeonPostgreSQL + Test Postman
+- Folder structure berbasis feature:
+  - events, transactions, vouchers, reviews (Feature 1)
+  - auth, users, referrals, dashboard (Feature 2)
+- Shared folder untuk:
+  - middleware, utils, config
+
+Frontend:
+- React + Vite + Tailwind
+- Struktur:
+  - pages/
+  - features/
+  - components/
+
+Role:
+- Customer
+- Organizer (upgrade via button, auto-approved tanpa admin)
+
+Core Features:
+1. Event:
+   - create, edit, archive
+   - category enum
+   - image (1)
+   - availableSeats
+2. Transaction:
+   - 1 user = 1 ticket
+   - upload payment proof
+   - organizer approve/reject
+3. Voucher:
+   - per event
+   - limited usage
+4. Referral:
+   - input saat register
+   - generate coupon + points
+5. Points:
+   - FIFO usage
+   - bisa combine dengan discount
+6. Review:
+   - hanya setelah DONE
+
+Rules:
+- coupon XOR voucher
+- points boleh digabung
+- total >= 0
+- expired 2 jam
+- cancel 3 hari
+
+Git workflow:
+- main, dev, feature-1, feature-2
+- 1 file = 1 owner
+- shared file harus komunikasi sebelum edit
+
+Buatkan kode yang clean, scalable, dan mengikuti struktur tersebut.
