@@ -5,15 +5,26 @@ generator client {
   provider = "prisma-client-js"
 }
 
+/**
+ * DATABASE CONFIGURATION
+ */
 datasource db {
   provider = "postgresql"
 }
 
+/**
+ * =========================================
+ * ENUMS
+ * =========================================
+ */
+
+// Menentukan peran pengguna dalam sistem
 enum Role {
   CUSTOMER
   ORGANIZER
 }
 
+// Menentukan status siklus hidup sebuah acara
 enum EventStatus {
   DRAFT
   PUBLISHED
@@ -21,6 +32,7 @@ enum EventStatus {
   CANCELED
 }
 
+// Menentukan status perjalanan sebuah transaksi
 enum TransactionStatus {
   WAITING_FOR_PAYMENT
   WAITING_FOR_ADMIN_CONFIRMATION
@@ -30,19 +42,27 @@ enum TransactionStatus {
   CANCELED
 }
 
+/**
+ * =========================================
+ * MODELS (TABLES)
+ * =========================================
+ */
+
+// TABEL: User
+// Menyimpan data akun, profil, dan informasi referral
 model User {
-  id             Int       @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   name           String
-  email          String    @unique
+  email          String   @unique
   password       String
   profilePicture String?
-  role           Role      @default(CUSTOMER)
-  referralCode   String    @unique
+  role           Role     @default(CUSTOMER)
+  referralCode   String   @unique
   referredById   Int?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
-  // Relations
+  // Relasi
   referredBy   User?         @relation("UserReferrals", fields: [referredById], references: [id])
   referrals    User[]        @relation("UserReferrals")
   points       Point[]
@@ -54,6 +74,8 @@ model User {
   @@index([referralCode])
 }
 
+// TABEL: Point
+// Menyimpan riwayat poin yang didapat dari referral (sistem FIFO)
 model Point {
   id        Int      @id @default(autoincrement())
   userId    Int
@@ -66,12 +88,14 @@ model Point {
   @@index([userId])
 }
 
+// TABEL: Coupon
+// Menyimpan kupon diskon reward untuk pengguna baru
 model Coupon {
   id        Int      @id @default(autoincrement())
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
   code      String   @unique
-  amount    Int // Discount amount/percentage logic handled in service
+  amount    Int // Nominal atau persentase pemotongan
   expiresAt DateTime
   isUsed    Boolean  @default(false)
   createdAt DateTime @default(now())
@@ -79,12 +103,14 @@ model Coupon {
   @@index([userId])
 }
 
+// TABEL: Event
+// Menyimpan informasi lengkap mengenai acara/event
 model Event {
   id          Int         @id @default(autoincrement())
   organizerId Int
   organizer   User        @relation(fields: [organizerId], references: [id])
   name        String
-  price       Int         @default(0) // 0 means free
+  price       Int         @default(0)
   description String      @db.Text
   location    String
   category    String
@@ -96,7 +122,7 @@ model Event {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
-  // Relations
+  // Relasi
   vouchers     Voucher[]
   transactions Transaction[]
   reviews      Review[]
@@ -105,6 +131,8 @@ model Event {
   @@index([category, location])
 }
 
+// TABEL: Voucher
+// Menyimpan kode promosi khusus untuk event tertentu (dibuat oleh Organizer)
 model Voucher {
   id             Int      @id @default(autoincrement())
   eventId        Int
@@ -118,26 +146,30 @@ model Voucher {
   @@index([eventId])
 }
 
+// TABEL: Transaction
+// Menyimpan riwayat pendaftaran/pembelian tiket event
 model Transaction {
-  id            Int               @id @default(autoincrement())
-  customerId    Int
-  customer      User              @relation(fields: [customerId], references: [id])
-  eventId       Int
-  event         Event             @relation(fields: [eventId], references: [id])
-  status        TransactionStatus @default(WAITING_FOR_PAYMENT)
-  totalPrice    Int
-  paymentProof  String?
-  pointsUsed    Int               @default(0)
-  voucherId     Int?
-  couponId      Int?
-  expiresAt     DateTime // Timer for payment proof
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
+  id           Int               @id @default(autoincrement())
+  customerId   Int
+  customer     User              @relation(fields: [customerId], references: [id])
+  eventId      Int
+  event        Event             @relation(fields: [eventId], references: [id])
+  status       TransactionStatus @default(WAITING_FOR_PAYMENT)
+  totalPrice   Int
+  paymentProof String?
+  pointsUsed   Int               @default(0)
+  voucherId    Int?
+  couponId     Int?
+  expiresAt    DateTime // Batas waktu untuk upload bukti bayar
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
 
   @@index([customerId])
   @@index([eventId])
 }
 
+// TABEL: Review
+// Menyimpan ulasan dan rating dari peserta setelah event selesai
 model Review {
   id         Int      @id @default(autoincrement())
   customerId Int
