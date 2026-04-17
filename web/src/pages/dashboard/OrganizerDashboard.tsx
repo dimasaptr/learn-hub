@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { 
-  LineChart, Line, XAxis, YAxis, CartesianGrid, 
+  XAxis, YAxis, CartesianGrid, 
   Tooltip, ResponsiveContainer, AreaChart, Area 
 } from 'recharts';
 import api from '../../shared/api/api';
@@ -18,7 +18,6 @@ interface ChartItem {
 }
 
 const OrganizerDashboard = () => {
-  const { user } = useAuthStore();
   const [stats, setStats] = useState<StatSummary | null>(null);
   const [chartData, setChartData] = useState<ChartItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -67,7 +66,7 @@ const OrganizerDashboard = () => {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-gradient-to-br from-blue-600/20 to-indigo-600/5 p-8 rounded-3xl border border-blue-500/20 shadow-2xl backdrop-blur-sm">
+          <div className="bg-linear-to-br from-blue-600/20 to-indigo-600/5 p-8 rounded-3xl border border-blue-500/20 shadow-2xl backdrop-blur-sm">
             <h3 className="text-slate-400 font-medium mb-1">Total Revenue</h3>
             <p className="text-4xl font-black text-white">
               Rp {stats?.totalIncome.toLocaleString('id-ID')}
@@ -91,7 +90,7 @@ const OrganizerDashboard = () => {
         </div>
 
         {/* Chart Section */}
-        <section className="bg-slate-800/30 p-8 rounded-[2rem] border border-slate-700/50 shadow-2xl">
+        <section className="bg-slate-800/30 p-8 rounded-4xl border border-slate-700/50 shadow-2xl">
           <div className="flex items-center justify-between mb-10">
             <div>
               <h2 className="text-2xl font-bold">Revenue Graph</h2>

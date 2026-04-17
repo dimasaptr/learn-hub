@@ -27,7 +27,7 @@ export class DashboardRepository {
             name: true
           }
         },
-        user: {
+        customer: {
           select: {
             name: true,
             email: true
