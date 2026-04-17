@@ -2,7 +2,7 @@ function App() {
   return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center text-white">
       <div className="text-center">
-        <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent mb-4">
+        <h1 className="text-5xl font-bold bg-linear-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent mb-4">
           Learn Hub
         </h1>
         <p className="text-slate-400 text-lg">
