@@ -62,6 +62,17 @@ export class UserController {
     }
   };
 
+  getRewards = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      // @ts-ignore
+      const userId = req.user?.id;
+      const rewards = await this.userService.getRewards(userId);
+      res.status(200).json({ status: 'success', data: rewards });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   forgotPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { email } = req.body;

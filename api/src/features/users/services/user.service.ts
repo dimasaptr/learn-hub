@@ -48,6 +48,19 @@ export class UserService {
     return true;
   }
 
+  async getRewards(userId: number) {
+    const points = await this.userRepository.findActivePoints(userId);
+    const coupons = await this.userRepository.findActiveCoupons(userId);
+
+    const totalPoints = points.reduce((acc, p) => acc + p.amount, 0);
+
+    return {
+      totalPoints,
+      pointsLines: points,
+      coupons
+    };
+  }
+
   // CONSOLE SIMULATION FOR FORGOT PASSWORD
   async triggerForgotPassword(email: string): Promise<boolean> {
     const user = await this.userRepository.findByEmail(email);

@@ -22,6 +22,7 @@ const userController = new UserController();
 router.get('/profile', verifyToken, userController.getProfile);
 router.patch('/profile', verifyToken, userController.updateName);
 router.patch('/change-password', verifyToken, userController.changePassword);
+router.get('/rewards', verifyToken, userController.getRewards);
 
 // Public Route
 router.post('/forgot-password', userController.forgotPassword);
