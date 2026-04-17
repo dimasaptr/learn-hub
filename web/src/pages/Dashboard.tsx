@@ -31,6 +31,14 @@ const Dashboard = () => {
           <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
             <h3 className="text-lg text-slate-400 mb-2">Your Role</h3>
             <p className="text-2xl font-semibold text-blue-400">{user?.role}</p>
+            {user?.role === 'ORGANIZER' && (
+              <button 
+                onClick={() => navigate('/organizer/dashboard')}
+                className="mt-4 w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-bold"
+              >
+                Go to Management Dashboard →
+              </button>
+            )}
           </div>
           
           <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
