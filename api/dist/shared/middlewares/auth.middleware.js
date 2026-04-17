@@ -1,3 +1,15 @@
+/**
+ * =========================================
+ * FILE INFO
+ * =========================================
+ * File Name   : auth.middleware.ts
+ * Type        : Middleware
+ * Feature     : Shared
+ * Owner       : Dimas
+ * Description : JWT verification and RBAC
+ * Source Path : src/shared/middlewares/auth.middleware.ts
+ * =========================================
+ */
 import jwt from 'jsonwebtoken';
 import { Role } from '@prisma/client';
 export const verifyToken = (req, res, next) => {

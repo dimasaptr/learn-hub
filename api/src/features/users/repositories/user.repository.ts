@@ -1,5 +1,6 @@
 import prisma from '../../../shared/config/prisma.js';
-import { Prisma, User } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+import type { User } from '@prisma/client';
 
 /**
  * =========================================

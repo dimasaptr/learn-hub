@@ -1,7 +1,3 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { AuthRepository } from '../repositories/auth.repository.js';
-import { Role } from '@prisma/client';
 /**
  * =========================================
  * FILE INFO
@@ -16,6 +12,10 @@ import { Role } from '@prisma/client';
  * Status      : ACTIVE
  * =========================================
  */
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { AuthRepository } from '../repositories/auth.repository.js';
+import { Role } from '@prisma/client';
 export class AuthService {
     authRepository;
     constructor() {

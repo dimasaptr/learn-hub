@@ -1,4 +1,3 @@
-import prisma from '../../../shared/config/prisma.js';
 /**
  * =========================================
  * FILE INFO
@@ -13,6 +12,7 @@ import prisma from '../../../shared/config/prisma.js';
  * Status      : ACTIVE
  * =========================================
  */
+import prisma from '../../../shared/config/prisma.js';
 export class AuthRepository {
     async createUser(data) {
         return await prisma.user.create({

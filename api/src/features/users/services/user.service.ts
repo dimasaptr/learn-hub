@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { UserRepository } from '../repositories/user.repository.js';
-import { User } from '@prisma/client';
+import type { User } from '@prisma/client';
 
 /**
  * =========================================

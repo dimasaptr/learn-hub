@@ -1,4 +1,3 @@
-import { AuthService } from '../services/auth.service.js';
 /**
  * =========================================
  * FILE INFO
@@ -13,6 +12,7 @@ import { AuthService } from '../services/auth.service.js';
  * Status      : ACTIVE
  * =========================================
  */
+import { AuthService } from '../services/auth.service.js';
 export class AuthController {
     authService;
     constructor() {
