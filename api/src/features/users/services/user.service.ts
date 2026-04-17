@@ -1,7 +1,3 @@
-import bcrypt from 'bcrypt';
-import { UserRepository } from '../repositories/user.repository.js';
-import type { User } from '@prisma/client';
-
 /**
  * =========================================
  * FILE INFO
@@ -14,6 +10,10 @@ import type { User } from '@prisma/client';
  * Source Path : api/src/features/users/services/user.service.ts
  * =========================================
  */
+
+import bcrypt from 'bcrypt';
+import { UserRepository } from '../repositories/user.repository.js';
+import type { User } from '@prisma/client';
 
 export class UserService {
   private userRepository = new UserRepository();

@@ -1,6 +1,3 @@
-import { Router } from 'express';
-import { UserController } from './controllers/user.controller.js';
-import { verifyToken } from '../../shared/middlewares/auth.middleware.js';
 /**
  * =========================================
  * FILE INFO
@@ -13,6 +10,9 @@ import { verifyToken } from '../../shared/middlewares/auth.middleware.js';
  * Source Path : api/src/features/users/user.routes.ts
  * =========================================
  */
+import { Router } from 'express';
+import { UserController } from './controllers/user.controller.js';
+import { verifyToken } from '../../shared/middlewares/auth.middleware.js';
 const router = Router();
 const userController = new UserController();
 // Protected Routes (Require Login)

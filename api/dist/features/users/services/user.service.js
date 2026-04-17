@@ -1,5 +1,3 @@
-import bcrypt from 'bcrypt';
-import { UserRepository } from '../repositories/user.repository.js';
 /**
  * =========================================
  * FILE INFO
@@ -12,6 +10,8 @@ import { UserRepository } from '../repositories/user.repository.js';
  * Source Path : api/src/features/users/services/user.service.ts
  * =========================================
  */
+import bcrypt from 'bcrypt';
+import { UserRepository } from '../repositories/user.repository.js';
 export class UserService {
     userRepository = new UserRepository();
     async getProfile(userId) {

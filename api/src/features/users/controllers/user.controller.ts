@@ -1,6 +1,3 @@
-import type { Request, Response, NextFunction } from 'express';
-import { UserService } from '../services/user.service.js';
-
 /**
  * =========================================
  * FILE INFO
@@ -13,6 +10,9 @@ import { UserService } from '../services/user.service.js';
  * Source Path : api/src/features/users/controllers/user.controller.ts
  * =========================================
  */
+
+import type { Request, Response, NextFunction } from 'express';
+import { UserService } from '../services/user.service.js';
 
 export class UserController {
   private userService = new UserService();
