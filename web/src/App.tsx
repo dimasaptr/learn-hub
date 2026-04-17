@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import ProtectedRoute from './shared/components/ProtectedRoute';
 
 function App() {
   return (
@@ -9,6 +11,16 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       
+      {/* Protected Routes */}
+      <Route 
+        path="/dashboard" 
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } 
+      />
+
       {/* 404 Route */}
       <Route path="*" element={
         <div className="min-h-screen bg-slate-900 flex items-center justify-center text-white">
