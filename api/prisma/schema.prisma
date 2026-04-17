@@ -8,3 +8,145 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum Role {
+  CUSTOMER
+  ORGANIZER
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+  CANCELED
+}
+
+enum TransactionStatus {
+  WAITING_FOR_PAYMENT
+  WAITING_FOR_ADMIN_CONFIRMATION
+  DONE
+  REJECTED
+  EXPIRED
+  CANCELED
+}
+
+model User {
+  id             Int       @id @default(autoincrement())
+  name           String
+  email          String    @unique
+  password       String
+  profilePicture String?
+  role           Role      @default(CUSTOMER)
+  referralCode   String    @unique
+  referredById   Int?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Relations
+  referredBy   User?         @relation("UserReferrals", fields: [referredById], references: [id])
+  referrals    User[]        @relation("UserReferrals")
+  points       Point[]
+  coupons      Coupon[]
+  events       Event[]
+  transactions Transaction[]
+  reviews      Review[]
+
+  @@index([referralCode])
+}
+
+model Point {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  amount    Int
+  expiresAt DateTime
+  isUsed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Coupon {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  code      String   @unique
+  amount    Int // Discount amount/percentage logic handled in service
+  expiresAt DateTime
+  isUsed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Event {
+  id          Int         @id @default(autoincrement())
+  organizerId Int
+  organizer   User        @relation(fields: [organizerId], references: [id])
+  name        String
+  price       Int         @default(0) // 0 means free
+  description String      @db.Text
+  location    String
+  category    String
+  seats       Int
+  startDate   DateTime
+  endDate     DateTime
+  image       String?
+  status      EventStatus @default(DRAFT)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  vouchers     Voucher[]
+  transactions Transaction[]
+  reviews      Review[]
+
+  @@index([organizerId])
+  @@index([category, location])
+}
+
+model Voucher {
+  id             Int      @id @default(autoincrement())
+  eventId        Int
+  event          Event    @relation(fields: [eventId], references: [id])
+  code           String   @unique
+  discountAmount Int
+  quota          Int
+  expiresAt      DateTime
+  createdAt      DateTime @default(now())
+
+  @@index([eventId])
+}
+
+model Transaction {
+  id            Int               @id @default(autoincrement())
+  customerId    Int
+  customer      User              @relation(fields: [customerId], references: [id])
+  eventId       Int
+  event         Event             @relation(fields: [eventId], references: [id])
+  status        TransactionStatus @default(WAITING_FOR_PAYMENT)
+  totalPrice    Int
+  paymentProof  String?
+  pointsUsed    Int               @default(0)
+  voucherId     Int?
+  couponId      Int?
+  expiresAt     DateTime // Timer for payment proof
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([customerId])
+  @@index([eventId])
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  customerId Int
+  customer   User     @relation(fields: [customerId], references: [id])
+  eventId    Int
+  event      Event    @relation(fields: [eventId], references: [id])
+  rating     Int
+  comment    String?  @db.Text
+  createdAt  DateTime @default(now())
+
+  @@index([customerId, eventId])
+}
