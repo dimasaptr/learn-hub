@@ -24,7 +24,7 @@ export class DashboardRepository {
       include: {
         event: {
           select: {
-            title: true
+            name: true
           }
         },
         user: {

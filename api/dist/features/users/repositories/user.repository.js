@@ -35,4 +35,22 @@ export class UserRepository {
             data: { password: newPasswordHash },
         });
     }
+    async findActivePoints(userId) {
+        return prisma.point.findMany({
+            where: {
+                userId,
+                expiresAt: { gt: new Date() },
+                isUsed: false
+            }
+        });
+    }
+    async findActiveCoupons(userId) {
+        return prisma.coupon.findMany({
+            where: {
+                userId,
+                expiresAt: { gt: new Date() },
+                isUsed: false
+            }
+        });
+    }
 }

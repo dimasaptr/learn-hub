@@ -40,6 +40,8 @@ export class UserRepository {
       where: { id },
       data: { password: newPasswordHash },
     });
+  }
+
   async findActivePoints(userId: number) {
     return prisma.point.findMany({
       where: {
