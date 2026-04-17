@@ -1,7 +1,3 @@
-import prisma from '../../../shared/config/prisma.js';
-import { Prisma } from '@prisma/client';
-import type { User } from '@prisma/client';
-
 /**
  * =========================================
  * FILE INFO
@@ -14,6 +10,10 @@ import type { User } from '@prisma/client';
  * Source Path : api/src/features/users/repositories/user.repository.ts
  * =========================================
  */
+
+import prisma from '../../../shared/config/prisma.js';
+import { Prisma } from '@prisma/client';
+import type { User } from '@prisma/client';
 
 export class UserRepository {
   async findById(id: number): Promise<User | null> {
