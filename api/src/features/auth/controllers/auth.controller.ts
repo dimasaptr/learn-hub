@@ -1,6 +1,3 @@
-import type { Request, Response, NextFunction } from 'express';
-import { AuthService } from '../services/auth.service.js';
-
 /**
  * =========================================
  * FILE INFO
@@ -15,6 +12,9 @@ import { AuthService } from '../services/auth.service.js';
  * Status      : ACTIVE
  * =========================================
  */
+
+import type { Request, Response, NextFunction } from 'express';
+import { AuthService } from '../services/auth.service.js';
 
 export class AuthController {
   private authService: AuthService;

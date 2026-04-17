@@ -1,6 +1,3 @@
-import { Router } from 'express';
-import { AuthController } from './controllers/auth.controller.js';
-
 /**
  * =========================================
  * FILE INFO
@@ -13,6 +10,9 @@ import { AuthController } from './controllers/auth.controller.js';
  * Source Path : src/features/auth/auth.routes.ts
  * =========================================
  */
+
+import { Router } from 'express';
+import { AuthController } from './controllers/auth.controller.js';
 
 const router = Router();
 const authController = new AuthController();

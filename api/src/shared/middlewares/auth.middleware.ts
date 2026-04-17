@@ -1,7 +1,3 @@
-import type { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-import { Role } from '@prisma/client';
-
 /**
  * =========================================
  * FILE INFO
@@ -14,6 +10,10 @@ import { Role } from '@prisma/client';
  * Source Path : src/shared/middlewares/auth.middleware.ts
  * =========================================
  */
+
+import type { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+import { Role } from '@prisma/client';
 
 export interface AuthRequest extends Request {
   user?: {

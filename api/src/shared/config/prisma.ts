@@ -1,5 +1,3 @@
-import { PrismaClient } from '@prisma/client';
-
 /**
  * =========================================
  * FILE INFO
@@ -12,6 +10,8 @@ import { PrismaClient } from '@prisma/client';
  * Source Path : src/shared/config/prisma.ts
  * =========================================
  */
+
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 

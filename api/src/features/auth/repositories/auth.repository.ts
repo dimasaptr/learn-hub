@@ -1,6 +1,3 @@
-import prisma from '../../../shared/config/prisma.js';
-import type { Prisma, User } from '@prisma/client';
-
 /**
  * =========================================
  * FILE INFO
@@ -15,6 +12,9 @@ import type { Prisma, User } from '@prisma/client';
  * Status      : ACTIVE
  * =========================================
  */
+
+import prisma from '../../../shared/config/prisma.js';
+import type { Prisma, User } from '@prisma/client';
 
 export class AuthRepository {
   async createUser(data: Prisma.UserCreateInput): Promise<User> {
